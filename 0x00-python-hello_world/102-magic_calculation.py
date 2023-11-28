@@ -1,7 +1,5 @@
 #!/usr/bin/python3
 def magic_calculation(a, b):
-    return(98 + (a ** b)) 
-
-git add. 
-git commit
-git push
+    result = 98
+    result += a ** b
+    return result
