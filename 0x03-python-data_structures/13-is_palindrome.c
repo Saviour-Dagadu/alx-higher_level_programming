@@ -3,31 +3,51 @@
 #include <stdio.h>
 
 /**
- * palindrom - recursive alind or not
- * @head: head list
- * Return: 0 if it is not a palindrome
- * 1 if it is a palindrome
- */
+*add_nodeint - adds a new node at the beginning of a listint_t list
+*@head: head of listint_t
+*@n: int to add in listint_t list
+*Return: address of the new element, or NULL if it failed
+*/
+listint_t *add_nodeint(listint_t **head, const int n)
+{
+	listint_t *new;
+
+	new = malloc(sizeof(listint_t));
+	if (new == NULL)
+		return (NULL);
+	new->n = n;
+	new->next = *head;
+	*head = new;
+	return (new);
+}
+/**
+*is_palindrome - identify if a syngle linked list is palindrome
+*@head: head of listint_t
+*Return: 1 if it is palindrome else 0
+*/
 int is_palindrome(listint_t **head)
 {
-	if (head == NULL || *head ++ NULL)
-		return (1);
-	return (aux_palind(head, *head));
-}
+	listint_t *head2 = *head;
+	listint_t *aux = NULL, *aux2 = NULL;
 
-/**
- * aux_palind - funt to know if is palindrome
- * @head: head list
- * @end: end list
- */
-int aux_palind(listint_t *head, listin_t *end)
-{
-	if (end == NULL)
+	if (*head == NULL || head2->next == NULL)
 		return (1);
-	if (aux_palind(head, end->next) && (*head)->n == end->n)
+	while (head2 != NULL)
 	{
-		*head = (*head)->next;
-		return (1);
+		add_nodeint(&aux, head2->n);
+		head2 = head2->next;
 	}
-	return (0);
+	aux2 = aux;
+	while (*head != NULL)
+	{
+		if ((*head)->n != aux2->n)
+		{
+			free_listint(aux);
+			return (0);
+		}
+		*head = (*head)->next;
+		aux2 = aux2->next;
+	}
+	free_listint(aux);
+	return (1);
 }
