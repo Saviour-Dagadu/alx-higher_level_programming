@@ -8,13 +8,10 @@ fi
 
 url="$1"
 
-# Send a request to the URL using curl and get the size of the response body in bytes
-size=$(curl -sI "$url" | awk '/Content-Length/ {print $2}' | tr -d '\r\n')
+# Send a request to the URL using curl and get the response body
+response=$(curl -s "$url")
 
-# Check if Content-Length header is provided
-if [ -z "$size" ]; then
-    echo "Unable to retrieve content size for $url"
-    exit 1
-fi
+# Get the size of the response body in bytes
+size=$(echo -n "$response" | wc -c)
 
 echo "Size of the response body for $url is $size bytes."
